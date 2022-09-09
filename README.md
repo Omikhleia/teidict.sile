@@ -6,7 +6,7 @@
 
 This package collection for the [SILE](https://github.com/sile-typesetter/sile) typesetter
 aims at supporting the (XML) TEI P4 “Print Dictionary” standard — or, more precisely,
-a certain subset of it, as suitable for the [Sindarin Dictionary project](https://github.com/Omikhleia/sindict),
+a certain subset of it, as suitable for the [Sindarin dictionary project](https://github.com/Omikhleia/sindict),
 so that to generate a PDF out of it.
 
 The main pain point is that such a dictionary uses a heavily “semantic” structured
@@ -24,21 +24,27 @@ Would you want to use this package and know more about the supported structure a
 then refer to the [Data Model](https://omikhleia.github.io/sindict/manual/DATA_MODEL.html)
 of the Sindarin Dictionary project.
 
+![dictionary](sampledict.png "Sample dictionary")
+
 ## Installation
 
 These packages require SILE v0.14 or upper.
 
-(LUAROCKS: LATER)
+Installation relies on the **luarocks** package manager.
 
-_This is currently a very rough upgrade of the previous experimental package for SILE 0.12._
+To install the latest development version and all its dependencies (see below), you may use the provided “rockspec”:
 
-_When completed, it will be distributed via luarocks._
+```
+luarocks --lua-version 5.4 install --server=https://luarocks.org/dev teidict.sile
+```
+
+(Refer to the SILE manual for more detailed 3rd-party package installation information.)
 
 **Note**: This collection also uses other SILE packages, such as:
 
-- The [Resilient](https://github.com/Omikhleia/resilient.sile) collection, for styling and
+- The [resilient](https://github.com/Omikhleia/resilient.sile) collection, for styling and
   other layout features.
-- The [Couyards](https://github.com/Omikhleia/couyards.sile) package, for typrographic ornaments.
+- The [couyards](https://github.com/Omikhleia/couyards.sile) package, for typographic ornaments.
 
 When installed with luarocks, these dependencies are automatically installed too.
 
