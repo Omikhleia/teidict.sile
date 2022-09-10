@@ -21,7 +21,7 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      ["sile.classes.teidict"]           = "classes/teidict.lua",
+      ["sile.classes.teibook"]           = "classes/teibook.lua",
       ["sile.packages.teidict"]          = "packages/teidict/init.lua",
       ["sile.packages.teiabbr"]          = "packages/teiabbr/init.lua",
    }
