@@ -88,8 +88,9 @@ function package:writeAbbr ()
   table.sort(a, compare)
 
   SILE.settings:temporarily(function ()
-    SILE.settings:set("document.lskip", "2cm")
-    SILE.settings:set("document.parindent", "-2cm")
+    local indent = SILE.length("2cm")
+    SILE.settings:set("document.lskip", indent)
+    SILE.settings:set("document.parindent", indent:negate())
     SILE.call("medskip")
     SILE.call("pdf:destination", { name = "tei_abbreviations" })
     SILE.call("pdf:bookmark", { title = teitrans.titles.abbreviations, dest = "tei_abbreviations", level = 1 })
@@ -98,8 +99,14 @@ function package:writeAbbr ()
 
     for _, v in pairs(teitrans.symbols) do
       if v.used then
-        local h = SILE.call("hbox", {}, { v.symbol })
-        h.width = SILE.length("0cm") -- Real weird but works.
+        local h = SILE.typesetter:makeHbox({ v.symbol })
+        SILE.typesetter:pushHbox(h)
+        local offset = indent:absolute() - h.width
+        if offset:tonumber() > 0 then
+          SILE.call("kern", { width = offset })
+        else
+          SILE.typesetter:typeset(" ")
+        end
         SILE.typesetter:typeset(v.full)
         SILE.typesetter:leaveHmode()
       end
@@ -108,7 +115,12 @@ function package:writeAbbr ()
       local h = SILE.call("hbox", {}, function ()
         SILE.call("style:apply", { name = "tei:pos" }, { n.translate })
       end)
-      h.width = SILE.length("0cm") -- Real weird but works.
+      local offset = indent:absolute() - h.width
+      if offset:tonumber() > 0 then
+        SILE.call("kern", { width = offset })
+      else
+        SILE.typesetter:typeset(" ")
+      end
       SILE.typesetter:typeset(n.full)
       SILE.typesetter:leaveHmode()
     end
@@ -125,8 +137,9 @@ function package.writeBibl (_, bibliography)
   end
 
   SILE.settings:temporarily(function ()
-    SILE.settings:set("document.lskip", "1cm")
-    SILE.settings:set("document.parindent", "-1cm")
+    local indent = SILE.length("1cm")
+    SILE.settings:set("document.lskip", indent)
+    SILE.settings:set("document.parindent", indent:negate())
     SILE.call("medskip")
     SILE.call("pdf:destination", { name = "tei_bibliography" })
     SILE.call("pdf:bookmark", { title = teitrans.titles.references, dest = "tei_bibliography", level = 1 })
@@ -143,8 +156,9 @@ function package.writeBibl (_, bibliography)
             bibliography[i].options.n or "["..nBibl.."]"
           })
         end)
-        if h.width < 0 then
-          h.width = SILE.length("0cm") -- Real weird but works.
+        local offset = indent:absolute() - h.width
+        if offset:tonumber() > 0 then
+          SILE.call("kern", { width = offset })
         else
           SILE.typesetter:typeset(" ")
         end

@@ -13,6 +13,33 @@
 --
 local base = require("packages.base")
 
+-- BEGIN HACK
+-- Later: refactor to use silex.ast or SILE ast utilities if merged
+local function createCommand (command, options, content, position)
+  local result = { content }
+  result.options = options or {}
+  result.command = command
+  result.id = "command"
+  if position then
+    result.col = position.col or 0
+    result.lno = position.lno or 0
+    result.pos = position.pos or 0
+  else
+    result.col = 0
+    result.lno = 0
+    result.pos = 0
+  end
+  return result
+end
+local function subContent (content)
+  local out = {}
+  for _, val in ipairs(content) do
+    out[#out+1] = val
+  end
+  return out
+end
+-- END HACK
+
 local package = pl.class(base)
 package._name = "teidict"
 
@@ -53,7 +80,10 @@ function package:registerStyles ()
   styles:defineStyle("tei:milestone", {}, { font = { family= "Gingerbread Initials", size = "30pt" } })
   styles:defineStyle("tei:orth", { inherit = "tei:orth:base"}, { font = { weight = 700 } })
   styles:defineStyle("tei:bibl", {}, { font = { language = "und", size = "0.8em" } })
-  styles:defineStyle("tei:note", {}, { font = { size = "0.85em" } })
+  styles:defineStyle("tei:note", {}, {
+    font = { size = "0.85em" },
+    paragraph = { align = "justify" } -- HACK something wrong in styles?
+  })
   styles:defineStyle("tei:mentioned", {}, { font = { style = "italic" } })
   styles:defineStyle("tei:pos", {}, { font = { style = "italic", size = "0.9em" } })
   styles:defineStyle("tei:hint", {}, { font = { style = "italic" } })
@@ -276,9 +306,6 @@ function package:registerCommands ()
     local ornament = alt and "2" or "1"
     SILE.typesetter:leaveHmode()
     SILE.call("couyard", { type = ornament, height = "8pt" })
-    -- SILE.call("center", {}, function()
-    --   SILE.call("svg", { src = "packages/culs-de-lampe/"..ornament..".svg", height = "8pt" })
-    -- end)
   end)
 
   -- HEADER LEVEL TAGS
@@ -330,24 +357,22 @@ function package:registerCommands ()
     local date = SILE.inputter:findInTree(content, "date")
     if date == nil then SU.error("Structure error, no date in TEI.publicationStmt") end
 
+    -- Loop over availability elements until find one in our language
+    local availability = findInTreeWithLang(content, "availability")
+    if availability == nil then SU.error("Stucture eror: no availability found in TEI.publicationStmt") end
+
     SILE.call("vfill")
     SILE.typesetter:leaveHmode()
-    SILE.call("style:apply", { name = "tei:header:legalese" }, function ()
-      SILE.settings:temporarily(function ()
-        SILE.call("noindent")
-        SILE.typesetter:typeset("© ")
-        SILE.process(date)
-        SILE.typesetter:typeset(", ")
-        SILE.process(publisher)
-        SILE.typesetter:leaveHmode()
-      end)
-      SILE.call("medskip")
-
-      -- Loop over availability elements until find one in our language
-      local availability = findInTreeWithLang(content, "availability")
-      if availability == nil then SU.error("Stucture eror: no availability found in TEI.publicationStmt") end
-      SILE.call("availability", availability.options, availability)
-    end)
+    SILE.call("style:apply", { name = "tei:header:legalese" }, {
+      createCommand("noindent"),
+      "© ",
+      subContent(date),
+      ", ",
+      subContent(publisher),
+      createCommand("medskip"),
+      subContent(availability),
+      createCommand("par")
+    })
     SILE.call("break")
   end)
 
@@ -421,27 +446,29 @@ function package:registerCommands ()
       SILE.call("pdf:destination", { name = options.id })
     end
 
-    local style = (options.type == "xref") and "tei:entry:xref" or "tei:entry:main"
-    SILE.call("style:apply", { name = style }, function()
-      local iElem = 0
-      for i=1, #content do
-        if type(content[i]) == "table" then
-          iElem = iElem + 1
-          content[i].options._pos = iElem
-          if content[i].command == "sense" and nSense > 1 then
-            iSense = iSense + 1
-            content[i].options.n = iSense
-          elseif content[i].command == "re" then
-            -- FIXME HACK trying to address a spacing issue later, but this is not a clean way
-            -- to do it. I am lacking faith here, should be done another way.
-            iRe = iRe + 1
-            content[i].options.n = iRe
-          end
-          SILE.process({ content[i] })
+    -- Rebuild target AST tree
+    local out = {}
+    local iElem = 0
+    for i=1, #content do
+      if type(content[i]) == "table" then
+        iElem = iElem + 1
+        content[i].options._pos = iElem
+        if content[i].command == "sense" and nSense > 1 then
+          iSense = iSense + 1
+          content[i].options.n = iSense
+        elseif content[i].command == "re" then
+          -- FIXME HACK trying to address a spacing issue later, but this is not a clean way
+          -- to do it. I am lacking faith here, should be done another way.
+          iRe = iRe + 1
+          content[i].options.n = iRe
         end
-        -- All text nodes in <entry> (normally only spaces) are ignored
+        out[#out + 1] = { content[i] }
       end
-    end)
+      -- All text nodes in <entry> (normally only spaces) are ignored
+    end
+    -- Pass the AST tree to styling (avoid functional call here)
+    local style = (options.type == "xref") and "tei:entry:xref" or "tei:entry:main"
+    SILE.call("style:apply", { name = style }, out)
     SILE.typesetter:leaveHmode()
   end)
 
@@ -552,12 +579,11 @@ function package:registerCommands ()
     end
     SILE.call("style:apply", { name = "tei:orth" }, content)
     if options.n then
-      SILE.call("style:apply", { name = "tei:entry:numbering" }, function()
-        SILE.typesetter:typeset(" "..self.class.packages.counters:formatCounter({
+      SILE.call("style:apply", { name = "tei:entry:numbering" }, {
+        " "..self.class.packages.counters:formatCounter({
           value = options.n,
           display = "ROMAN" })
-        )
-      end)
+        })
     end
   end)
 
@@ -565,12 +591,10 @@ function package:registerCommands ()
     local sic = SU.required(options, "sic", "TEI.corr")
     SILE.process(content)
     SILE.typesetter:typeset(" ")
-    SILE.call("style:apply", { name = "tei:corr" }, function()
-      -- Struck out the "sic" correction:
-      -- Not done -this does not behave well with line breaks
-      -- (until we have multiline strike-out)
-      SILE.typesetter:typeset("{"..sic.."}")
-    end)
+    -- N.B. Struck out the "sic" correction:
+    -- Not done -this does not behave well with line breaks
+    -- (until we have multiline strike-out)
+    SILE.call("style:apply", { name = "tei:corr" }, { "{"..sic.."}" })
   end)
 
   -- This only supports a subset of X-SAMPA latin representation of IPA.
@@ -667,15 +691,11 @@ function package:registerCommands ()
     doSpacing(options)
     if options.n then
       if options.n == 1 then
-        SILE.call("style:apply", { name = "tei:sense:numbering"}, function()
-          SILE.typesetter:typeset(""..options.n)
-        end)
+        SILE.call("style:apply", { name = "tei:sense:numbering"}, { ""..options.n })
         SILE.typesetter:typeset(". ")
       else
         SILE.typesetter:typeset("○ ") -- Note: U+25CB ○ white circle
-        SILE.call("style:apply", { name = "tei:sense:numbering"}, function()
-          SILE.typesetter:typeset(""..options.n)
-        end)
+        SILE.call("style:apply", { name = "tei:sense:numbering"}, { ""..options.n })
         SILE.typesetter:typeset(". ")
       end
     end
@@ -772,10 +792,10 @@ function package:registerCommands ()
   self:registerCommand("q", function (options, content)
     doSpacing(options)
     SILE.typesetter:typeset("◦ ") -- Note: U+25E6 white bullet
-    SILE.call("style:apply", { name = "tei:q" }, function ()
-      SILE.process(trimContent(content))
-      SILE.typesetter:typeset(",")
-    end)
+    SILE.call("style:apply", { name = "tei:q" }, {
+      trimContent(subContent(content)),
+      ","
+    })
   end)
 
   -- LINKING TAGS
@@ -840,18 +860,17 @@ function package:registerCommands ()
         if mainLang and options.lang and options.lang ~= mainLang then
           return -- Ignore comment note.
         end
-        SILE.settings:temporarily(function()
-          SILE.call("style:apply", { name = "tei:note" }, function()
-            SILE.typesetter:leaveHmode()
-            SILE.typesetter:typeset("▶") -- Note: U+25B6 black right pointing triangle
-            SILE.call("kern", { width = "0.25em" })
-            -- SILE.typesetter:typeset("◈ ") -- Note: U+25C8 white diamond containing black small diamond
-                                            -- Absent from Libertinus.
-            SILE.settings:set("document.language", options.lang)
-            SILE.process(trimContent(content))
-            SILE.typesetter:leaveHmode()
-          end)
-        end)
+        -- HACK para style issue (scoping?)
+        SILE.call("style:apply", { name = "tei:note" }, {
+          createCommand("par"),
+          createCommand("language", { main = options.lang }),
+          "▶", -- Note: ◈ U+25B6 black right pointing triangle
+          -- Note: U+25C8 white diamond containing black small diamond
+          -- Absent from Libertinus.
+          createCommand("kern", { width = "0.25em" }),
+          trimContent(subContent(content)),
+          createCommand("par")
+        })
       else
         SU.error("Unsupported type in TEI:note: "..t)
       end
