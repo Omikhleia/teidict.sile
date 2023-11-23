@@ -219,8 +219,14 @@ function class:_init (options)
 
 
   local styles = self.packages["resilient.styles"]
-  styles:defineStyle("teibook:titlepage", {}, { font = { family = "Libertinus Sans", size = "20pt" } })
-  styles:defineStyle("teibook:impressum", {}, { font = { style = "italic", features = "+hlig,+salt" } })
+  styles:defineStyle("teibook:titlepage", {}, {
+    font = { family = "Libertinus Sans", size = "20pt" },
+    paragraph = { align = "right" },
+  })
+  styles:defineStyle("teibook:impressum", {}, {
+    font = { style = "italic", features = "+hlig,+salt" },
+    paragraph = { align = "center" },
+  })
 end
 
 function class:endPage ()
@@ -322,12 +328,7 @@ function class:registerCommands ()
     SILE.call("nofolios")
     SILE.call("hbox", {}, {})
     SILE.call("vfill")
-    SILE.call("style:apply", { name = "teibook:titlepage" }, function ()
-      SILE.call("raggedleft", {}, function()
-        SILE.process(content)
-        SILE.typesetter:leaveHmode()
-      end)
-    end)
+    SILE.call("style:apply:paragraph", { name = "teibook:titlepage" }, content)
     SILE.call("vfill")
     SILE.call("hbox", {}, {})
     SILE.call("eject")
@@ -382,11 +383,7 @@ function class:registerCommands ()
     SILE.call("hbox", {}, {})
     SILE.call("vfill")
     SILE.typesetter:leaveHmode()
-    SILE.call("style:apply", { name = "teibook:impressum" }, function ()
-      SILE.call("center", {}, function()
-        SILE.process(content)
-      end)
-    end)
+    SILE.call("style:apply:paragraph", { name = "teibook:impressum" }, content)
     SILE.call("hbox", {}, {})
     SILE.typesetter:leaveHmode()
     SILE.call("break")
