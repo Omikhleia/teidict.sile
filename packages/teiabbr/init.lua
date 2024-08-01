@@ -11,6 +11,8 @@
 -- Here, we just provide lists of "usual" terms, as were used in our
 -- dictionaries.
 --
+require("silex.types") -- Compatibility shims
+
 local base = require("packages.base")
 
 local package = pl.class(base)
@@ -88,7 +90,7 @@ function package:writeAbbr ()
   table.sort(a, compare)
 
   SILE.settings:temporarily(function ()
-    local indent = SILE.length("2cm")
+    local indent = SILE.types.length("2cm")
     SILE.settings:set("document.lskip", indent)
     SILE.settings:set("document.parindent", indent:negate())
     SILE.call("medskip")
@@ -137,7 +139,7 @@ function package.writeBibl (_, bibliography)
   end
 
   SILE.settings:temporarily(function ()
-    local indent = SILE.length("1cm")
+    local indent = SILE.types.length("1cm")
     SILE.settings:set("document.lskip", indent)
     SILE.settings:set("document.parindent", indent:negate())
     SILE.call("medskip")

@@ -8,6 +8,8 @@
 -- and loads all needed packages. The hard work processing the
 -- XML content is done in the "teidict" package.
 --
+require("silex.types") -- Compatibility shims
+
 local plain = require("classes.plain")
 local class = pl.class(plain)
 class._name = "teibook"
@@ -236,10 +238,10 @@ function class:endPage ()
     SILE.typesetNaturally(SILE.getFrame("header"), function ()
       SILE.settings:pushState()
       SILE.settings:toplevelState()
-      SILE.settings:set("document.parindent", SILE.nodefactory.glue())
-      SILE.settings:set("current.parindent", SILE.nodefactory.glue())
-      SILE.settings:set("document.lskip", SILE.nodefactory.glue())
-      SILE.settings:set("document.rskip", SILE.nodefactory.glue())
+      SILE.settings:set("document.parindent", SILE.types.node.glue())
+      SILE.settings:set("current.parindent", SILE.types.node.glue())
+      SILE.settings:set("document.lskip", SILE.types.node.glue())
+      SILE.settings:set("document.rskip", SILE.types.node.glue())
       local foliotext = "— " .. self.packages.counters:formatCounter(SILE.scratch.counters.folio).." —" -- Note: U+2014 — em dash
 
       -- Some boxing needed, so we can easilycenter the folio number in between
@@ -251,7 +253,7 @@ function class:endPage ()
       local first = SILE.call("hbox", {}, function ()
         SILE.call("first-entry-reference")
       end)
-      local l = SILE.measurement("100%lw"):tonumber()
+      local l = SILE.types.measurement("100%lw"):tonumber()
       SILE.typesetter:pushGlue({ width = l  / 2 - first.width:tonumber() - folio.width:tonumber() / 2 })
 
       SILE.typesetter:typeset(foliotext)
@@ -263,7 +265,7 @@ function class:endPage ()
       end)
       SILE.typesetter:leaveHmode()
 
-      SILE.settings:set("current.parindent", SILE.nodefactory.glue())
+      SILE.settings:set("current.parindent", SILE.types.node.glue())
       --SILE.call("raise", { height = "0.475ex" }, function()
         SILE.call("fullrule", { thickness = "0.33pt" })
       --end)
@@ -292,7 +294,7 @@ function class.declareSettings (_)
     SILE.settings:declare({
         parameter = "teibook." .. k .. "skipamount",
         type = "vglue",
-        default = SILE.nodefactory.vglue(v),
+        default = SILE.types.node.vglue(v),
         help = "Amount of a \\teibook:" .. k .. "skip"
       })
   end

@@ -11,6 +11,8 @@
 -- Required packages: pdf, color, infonodes, raiselower, rules, url, svg, styles
 -- Required class support: teibook
 --
+require("silex.ast") -- Compatibility shims
+
 local base = require("packages.base")
 
 -- BEGIN HACK
@@ -152,12 +154,12 @@ end
 
 local function getFirstEntryOrth (content)
   -- Recurse into first forms until last level.
-  local form = SILE.inputter:findInTree(content, "form")
+  local form = SU.ast.findInTree(content, "form")
   if form then
     return getFirstEntryOrth(form)
   end
   -- The headword is the first orth in the lowest level form...
-  local orth = SILE.inputter:findInTree(content, "orth")
+  local orth = SU.ast.findInTree(content, "orth")
   if orth then
     -- Yay, we got the main "headword".
     -- Enrich the orth with its (form) parent type as it will be in charge of
@@ -311,8 +313,8 @@ function package:registerCommands ()
   -- HEADER LEVEL TAGS
 
   self:registerCommand("teiHeader", function (_, content)
-    local fileDesc = SILE.inputter:findInTree(content, "fileDesc") or SU.error("Structure error, no TEI.fileDesc")
-    local titleStmt = SILE.inputter:findInTree(fileDesc, "titleStmt") or SU.error("Structure error, no TEI.titleStmt")
+    local fileDesc = SU.ast.findInTree(content, "fileDesc") or SU.error("Structure error, no TEI.fileDesc")
+    local titleStmt = SU.ast.findInTree(fileDesc, "titleStmt") or SU.error("Structure error, no TEI.titleStmt")
     local title = findInTreeWithLang(titleStmt, "title") or SU.error("Structure error, no TEI.title")
 
     -- Some hack so that the top title page appears in the PDF outline.
@@ -352,9 +354,9 @@ function package:registerCommands ()
   SILE.call("xmltricks:passthru", {}, { "name" })
 
   self:registerCommand("publicationStmt", function (_, content)
-    local publisher = SILE.inputter:findInTree(content, "publisher")
+    local publisher = SU.ast.findInTree(content, "publisher")
     if publisher == nil then SU.error("Structure error, no publisher in TEI.publicationStmt") end
-    local date = SILE.inputter:findInTree(content, "date")
+    local date = SU.ast.findInTree(content, "date")
     if date == nil then SU.error("Structure error, no date in TEI.publicationStmt") end
 
     -- Loop over availability elements until find one in our language
@@ -479,8 +481,8 @@ function package:registerCommands ()
     -- On the other hand, this is a perfectly legit TEI construct, so it should not be handled
     -- this way, and here... and it could even occur theorically at other entry levels so would
     -- need some generalization
-    local firstForm = SILE.inputter:findInTree(content, "form")
-    local hasNestedForms = (SILE.inputter:findInTree(firstForm, "form") ~= nil)
+    local firstForm = SU.ast.findInTree(content, "form")
+    local hasNestedForms = (SU.ast.findInTree(firstForm, "form") ~= nil)
     local nForms = countElementByTag("form", content)
     local iForms = 0
 
@@ -651,7 +653,7 @@ function package:registerCommands ()
 
   self:registerCommand("pron", function (options, content)
     -- Convert to IPA, then typeset in an hbox to avoid line breaks
-    local pron = SU.contentToString(content)
+    local pron = SU.ast.contentToString(content)
     doSpacing(options)
     -- Put in an hbox, to avoid breaks in the pronunciation
     SILE.call("hbox", {}, { "["..toIpa(pron).."]" })
@@ -881,7 +883,7 @@ function package:registerCommands ()
     local lang = SU.required(options, "lang", "TEI.foreign")
 
     SILE.settings:temporarily(function()
-      SILE.settings:set("document.language", lang)
+      SILE.call("language", { main = lang })
       SILE.process(content)
     end)
   end)
