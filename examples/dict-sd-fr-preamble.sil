@@ -1,7 +1,7 @@
 \begin[papersize=7.44in x 9.68in, class=teibook]{document}
 %
 % This is a preamble for (XML) TEI dictionaries.
-% Usage: sile -I preamble/dict-sd-fr-preamble.sil someteidictionary.sil
+% Usage: sile dict-sd-fr-preamble.sil someteidictionary.xml -o someteidictionary.pdf
 %
 % Papersize 7.44in x 9.68in is the "Crown Quarto" (at least as per Lulu.com's
 % definition of it)
@@ -22,6 +22,7 @@
 \language[main=fr]
 \font[family=Libertinus Serif, size=10pt]
 \set[parameter=document.parindent, value=1.25em]
+\set[parameter=typesetter.italicCorrection, value=true]
 %
 % In the case of multi-lingual dictionaries, some elements can be
 % filtered out.
@@ -31,7 +32,5 @@
 % Finally some hyphenation tuning tweaks for the "neologisms" in our sample lexicons
 \hyphenator:add-exceptions[lang=en]{home-slayer}
 \hyphenator:add-exceptions[lang=fr]{pto-li-por-the}
-% And some that the patterns got weirdly (uh?)
-\hyphenator:add-exceptions[lang=fr]{dé-si-gnant}% was breaking at "désig-nant" in a sentence
 
 \end{document}

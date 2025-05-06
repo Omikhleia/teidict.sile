@@ -1,15 +1,27 @@
 --
 -- A (XML) TEI book class for SILE
--- 2021, 2022, The Sindarin Dictionary Project, Omikhleia, Didier Willis
--- License: MIT
 --
 -- This is the book-like class for (XML) TEI dictionaries.
 -- It just defines the appropriate page masters, sectioning hooks
 -- and loads all needed packages. The hard work processing the
 -- XML content is done in the "teidict" package.
 --
-require("silex.types") -- Compatibility shims
-
+-- License: GPL-3.0-or-later
+--
+-- Copyright (C) 2021-2025 The Sindarin Dictionary Project, Omikhleia, Didier Willis
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+--
 local plain = require("classes.plain")
 local class = pl.class(plain)
 class._name = "teibook"
@@ -41,7 +53,7 @@ class.defaultFrameset = {
   }
 }
 
-function class:twoColumnMaster()
+function class:twoColumnMaster ()
   local gutterWidth = "3%pw" -- self.options.gutter or "3%pw"
   self:defineMaster({
     id = "right",
@@ -149,7 +161,7 @@ end
 
 local pageStyle
 
-function class.setPageStyleTitle (_)
+function class:setPageStyleTitle ()
   -- self:oneColumnMaster()
   -- Nothing to to for now, as the title page is generated
   -- via the TEI header, that normally comes first, and
@@ -157,7 +169,7 @@ function class.setPageStyleTitle (_)
   pageStyle = "cover"
 end
 
-function class.setPageStyleHeader (_)
+function class:setPageStyleHeader ()
   -- self:oneColumnMaster()
   -- Nothing to to for now, as the TEI header normally comes first
   -- and the initial page style is kind of ok for it.
@@ -203,7 +215,6 @@ function class:_init (options)
   self.firstContentFrame = "content"
   self:loadPackage("twoside", { oddPageMaster = "right", evenPageMaster = "left" })
   self:mirrorMaster("right", "left")
-  --self:switchMaster("right")
 
   self:loadPackage("resilient.styles")
 
@@ -218,7 +229,6 @@ function class:_init (options)
   self:loadPackage("xmltricks")
   self:loadPackage("svg")
   self:loadPackage("teidict")
-
 
   local styles = self.packages["resilient.styles"]
   styles:defineStyle("teibook:titlepage", {}, {
@@ -244,22 +254,21 @@ function class:endPage ()
       SILE.settings:set("document.rskip", SILE.types.node.glue())
       local foliotext = "— " .. self.packages.counters:formatCounter(SILE.scratch.counters.folio).." —" -- Note: U+2014 — em dash
 
-      -- Some boxing needed, so we can easilycenter the folio number in between
+      -- Some boxing needed, so we can easily center the folio number in between
       -- first and last references
-      local folio = SILE.call("hbox", {}, function()
+      local folio = SILE.typesetter:makeHbox(function()
         SILE.typesetter:typeset(foliotext)
       end)
-      table.remove(SILE.typesetter.state.nodes)
-      local first = SILE.call("hbox", {}, function ()
+      local first = SILE.typesetter:makeHbox(function ()
         SILE.call("first-entry-reference")
       end)
+
+      SILE.typesetter:pushHbox(first)
       local l = SILE.types.measurement("100%lw"):tonumber()
       SILE.typesetter:pushGlue({ width = l  / 2 - first.width:tonumber() - folio.width:tonumber() / 2 })
-
       SILE.typesetter:typeset(foliotext)
 
       SILE.call("hfill")
-      --local last =
       SILE.call("hbox", {}, function ()
         SILE.call("last-entry-reference")
       end)
@@ -287,7 +296,7 @@ local skips = {
   big = "1.8em plus 1.2em minus 0.6em" -- regular bigskip is 12pt plus 4pt minus 4pt
 }
 
-function class.declareSettings (_)
+function class:declareSettings ()
   plain:declareSettings()
 
   for k, v in pairs(skips) do

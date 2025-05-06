@@ -1,7 +1,5 @@
 --
 -- A (XML) TEI dictionary package for SILE
--- 2021, 2022, The Sindarin Dictionary Project, Omikhleia, Didier Willis
--- License: MIT
 --
 -- This package supports a subset of the TEI "Print Dictionary" standard,
 -- as suitable for the HSD project, and assumes a similar structure to the
@@ -11,49 +9,35 @@
 -- Required packages: pdf, color, infonodes, raiselower, rules, url, svg, styles
 -- Required class support: teibook
 --
-require("silex.ast") -- Compatibility shims
-
+-- License: GPL-3.0-or-later
+--
+-- Copyright (C) 2021-2025 The Sindarin Dictionary Project, Omikhleia, Didier Willis
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+--
 local base = require("packages.base")
-
--- BEGIN HACK
--- Later: refactor to use silex.ast or SILE ast utilities if merged
-local function createCommand (command, options, content, position)
-  local result = { content }
-  result.options = options or {}
-  result.command = command
-  result.id = "command"
-  if position then
-    result.col = position.col or 0
-    result.lno = position.lno or 0
-    result.pos = position.pos or 0
-  else
-    result.col = 0
-    result.lno = 0
-    result.pos = 0
-  end
-  return result
-end
-local function subContent (content)
-  local out = {}
-  for _, val in ipairs(content) do
-    out[#out+1] = val
-  end
-  return out
-end
--- END HACK
-
 local package = pl.class(base)
 package._name = "teidict"
 
 function package:_init ()
   base._init(self)
-  self.class:loadPackage("xmltricks")
-  self.class:loadPackage("inputfilter")
-  self.class:loadPackage("teiabbr")
-  self.class:loadPackage("couyards")
+  self:loadPackage("xmltricks")
+  self:loadPackage("inputfilter")
+  self:loadPackage("teiabbr")
+  self:loadPackage("couyards")
 end
 
-function package.declareSettings (_)
+function package:declareSettings ()
   SILE.settings:declare({
     -- The source dictionary may contain notes etc. in several languages, we do not
     -- want them all. On the other hand, it may contain several sense information
@@ -90,59 +74,17 @@ function package:registerStyles ()
   styles:defineStyle("tei:pos", {}, { font = { style = "italic", size = "0.9em" } })
   styles:defineStyle("tei:hint", {}, { font = { style = "italic" } })
   styles:defineStyle("tei:entry:main", {}, {})
-  styles:defineStyle("tei:entry:xref", { inherit = "tei:entry:main" }, { color = { color = "dimgray" } })
+  styles:defineStyle("tei:entry:xref", { inherit = "tei:entry:main" }, { color = "dimgray" })
   styles:defineStyle("tei:entry:numbering", { inherit = "tei:orth:base" }, { font = { size = "0.7em" } })
   styles:defineStyle("tei:sense:numbering", {}, { font = { weight = 700 } })
-  styles:defineStyle("tei:corr", {}, { color = { color = "dimgray" } })
+  styles:defineStyle("tei:corr", {}, { color = "dimgray" })
   styles:defineStyle("tei:header:legalese", {}, { font = { size = "0.9em" } })
   styles:defineStyle("tei:q", {}, { font = { style = "italic" } })
 end
 
--- UTILITIES
-
-local italicCorr = function (stylename)
-  local spec = SILE.scratch.styles.specs[stylename]
-  if spec == nil then SU.error("Unknown style "..stylename) end
-  if spec.style and spec.style.font and spec.style.font.style == "italic" then
-    SILE.call("kern", { width = "0.1em" }) -- Hand-made italic correction
-  end
-end
-
-local trimLeft = function (str)
-  return (str:gsub("^%s*", ""))
-end
-local trimRight = function (str)
-  return (str:gsub("%s*$", ""))
-end
--- local trim = function (str)
---   return trimRight(trimLeft(str))
--- end
-
 -- UTILITIES APPLYTHING TO THE AST
 
-local trimContent = function (content)
-  -- Remove leading and trailing spaces
-  if #content == 0 then return end
-  if type(content[1]) == "string" then
-    content[1] = trimLeft(content[1])
-  end
-  if type(content[#content]) == "string" then
-    content[#content] = trimRight(content[#content])
-  end
-  return content
-end
-
--- local countElements = function (content)
---   local count = 0
---   for i = 1, #content do
---     if type(content[i]) == "table" then
---       count = count + 1
---     end
---   end
---   return count
--- end
-
-local countElementByTag = function (tag, content)
+local function countElementByTag (tag, content)
   local count = 0
   for i = 1, #content do
     if type(content[i]) == "table" and content[i].command == tag then
@@ -200,7 +142,7 @@ end
 
 local refs = {}
 
-local buildPtrReferences = function (content)
+local function buildPtrReferences (content)
   io.stderr:write("<...building references...>")
   local count = 0
   for i = 1, #content do
@@ -366,14 +308,14 @@ function package:registerCommands ()
     SILE.call("vfill")
     SILE.typesetter:leaveHmode()
     SILE.call("style:apply", { name = "tei:header:legalese" }, {
-      createCommand("noindent"),
+      SU.ast.createCommand("noindent"),
       "© ",
-      subContent(date),
+      SU.ast.subContent(date),
       ", ",
-      subContent(publisher),
-      createCommand("medskip"),
-      subContent(availability),
-      createCommand("par")
+      SU.ast.subContent(publisher),
+      SU.ast.createCommand("medskip"),
+      SU.ast.subContent(availability),
+      SU.ast.createCommand("par")
     })
     SILE.call("break")
   end)
@@ -729,22 +671,22 @@ function package:registerCommands ()
     end
     SILE.settings:temporarily(function()
       SILE.settings:set("document.language", lang)
-      SILE.process(trimContent(content))
+      SILE.process(SU.ast.trimSubContent(content))
     end)
   end)
 
   self:registerCommand("gloss", function (_, content)
-    SILE.process(trimContent(content))
+    SILE.process(SU.ast.trimSubContent(content))
   end)
 
   self:registerCommand("def", function (_, content)
-    SILE.process(trimContent(content))
+    SILE.process(SU.ast.trimSubContent(content))
   end)
 
   self:registerCommand("tr", function (_, content)
     -- The HSD uses <def> (definition) everywhere, but for multilingual
     -- dictionaries, <tr> (translation) is rather expected.
-    SILE.process(trimContent(content))
+    SILE.process(SU.ast.trimSubContent(content))
   end)
 
   -- GRAMMATICAL AND USAGE LEVEL TAGS
@@ -764,7 +706,6 @@ function package:registerCommands ()
     if t == "hint" then
       SILE.typesetter:typeset("(")
       SILE.call("style:apply", { name = "tei:hint" }, content)
-      italicCorr("tei:hint")
       SILE.typesetter:typeset(")")
     elseif t == "lang" then
       doSpacing(options)
@@ -795,7 +736,7 @@ function package:registerCommands ()
     doSpacing(options)
     SILE.typesetter:typeset("◦ ") -- Note: U+25E6 white bullet
     SILE.call("style:apply", { name = "tei:q" }, {
-      trimContent(subContent(content)),
+      SU.ast.trimSubContent(SU.ast.subContent(content)),
       ","
     })
   end)
@@ -864,14 +805,14 @@ function package:registerCommands ()
         end
         -- HACK para style issue (scoping?)
         SILE.call("style:apply", { name = "tei:note" }, {
-          createCommand("par"),
-          createCommand("language", { main = options.lang }),
+          SU.ast.createCommand("par"),
+          SU.ast.createCommand("language", { main = options.lang }),
           "▶", -- Note: ◈ U+25B6 black right pointing triangle
           -- Note: U+25C8 white diamond containing black small diamond
           -- Absent from Libertinus.
-          createCommand("kern", { width = "0.25em" }),
-          trimContent(subContent(content)),
-          createCommand("par")
+          SU.ast.createCommand("kern", { width = "0.25em" }),
+          SU.ast.trimSubContent(SU.ast.subContent(content)),
+          SU.ast.createCommand("par")
         })
       else
         SU.error("Unsupported type in TEI:note: "..t)
@@ -928,7 +869,7 @@ This package is not intended to be used as-is, but along with the \doc:code{teib
 class, which loads it as well as a number of extra packages. It itself relies
 on a few settings that one would usually define in a preamble document, e.g.:
 
-\code{sile -I preambles/dict-sd-en-preamble.sil dictionary.xml}
+\code{sile preambles/dict-sd-en-preamble.sil dictionary.xml -o output.pdf}
 
 \end{document}]]
 
