@@ -1,6 +1,6 @@
 # teidict.sile
 
-[![license](https://img.shields.io/github/license/Omikhleia/teidict.sile?label=License)](LICENSE)
+[![License](https://img.shields.io/github/license/Omikhleia/teidict.sile?label=License)](LICENSE)
 [![Luacheck](https://img.shields.io/github/actions/workflow/status/Omikhleia/teidict.sile/luacheck.yml?branch=main&label=Luacheck&logo=Lua)](https://github.com/Omikhleia/teidict.sile/actions?workflow=Luacheck)
 [![Luarocks](https://img.shields.io/luarocks/v/Omikhleia/teidict.sile?label=Luarocks&logo=Lua)](https://luarocks.org/modules/Omikhleia/teidict.sile)
 
@@ -28,14 +28,14 @@ of the Sindarin Dictionary project.
 
 ## Installation
 
-These packages require SILE v0.14 or upper.
+These packages require SILE v0.15.12.
 
 Installation relies on the **luarocks** package manager.
 
 To install the latest development version and all its dependencies (see below), you may use the provided “rockspec”:
 
 ```
-luarocks --lua-version 5.4 install --server=https://luarocks.org/dev teidict.sile
+luarocks install --dev teidict.sile
 ```
 
 (Refer to the SILE manual for more detailed 3rd-party package installation information.)
@@ -52,7 +52,7 @@ If you are using this repository from a Git clone, though, you will have to inst
 
 ## License
 
-All the **code** in this repository is licensed under the MIT License.
+All the **code** in this repository is released under the GNU General Public License v3.0.
 
 This repository also includes a simple dictionary example — a small XML (TEI P4) lexicon
 (Almaqerin-French) — which is provided under license CC-BY-NC-SA 2.0 as a special arrangement.

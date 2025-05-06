@@ -10,7 +10,7 @@ description = {
     a specialized subset of the (XML) TEI P4 “Print Dictionary” standard.
   ]],
   homepage = "https://github.com/Omikhleia/teidict.sile",
-  license = "MIT",
+  license = "GPL-3.0",
 }
 dependencies = {
    "lua >= 5.1",

@@ -14842,6 +14842,39 @@
   <etym>TIZIK, sit. <hi>tizke</hi>, <hi>tizkû</hi></etym>
 </entry>
 
+<entry id="tole">
+  <form>
+    <orth>tole</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>exiger, requérir</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="toled">
+  <form>
+    <orth>toled</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>exigence, demande</def>
+    </trans>
+  </sense>
+  <etym>TOL[IT]</etym>
+</entry>
+
 <entry id="tomos">
   <form>
     <orth>tomos</orth>

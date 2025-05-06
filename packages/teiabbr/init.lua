@@ -1,8 +1,6 @@
 --
 -- Abbreviations and localized information used in TEI dictionaries
 -- (EXPERIMENTAL)
--- 2021, 2022, The Sindarin Dictionary Project, Omikhleia, Didier Willis
--- License: MIT
 --
 -- Unfortunately TEI doesn't standardize values for parts of speech, tenses, moods, etc.
 -- And there's no easy way to make it generic, so many schemes could be used...
@@ -11,23 +9,36 @@
 -- Here, we just provide lists of "usual" terms, as were used in our
 -- dictionaries.
 --
-require("silex.types") -- Compatibility shims
-
+-- License: GPL-3.0-or-later
+--
+-- Copyright (C) 2021-2025 The Sindarin Dictionary Project, Omikhleia, Didier Willis
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+--
 local base = require("packages.base")
-
 local package = pl.class(base)
 package._name = "teiabbr"
 
 function package:_init ()
   base._init(self)
-  self.class:loadPackage("textcase")
+  self:loadPackage("textcase")
 end
 
 SILE.scratch.teiabbr = SILE.scratch.teiabbr or {}
 
 -- METHODS
 
-function package.translateAbbr (_, content, _)
+function package:translateAbbr (content, _)
   if type(content) ~= "table" or #content ~= 1 then SU.error("Unexpect abbreviation type") end
 
   local abbr = content[1]
@@ -49,7 +60,7 @@ function package.translateAbbr (_, content, _)
   return teiabbr.translate or abbr
 end
 
-function package.orthPrefix (_, prefix)
+function package:orthPrefix (prefix)
   local lang = SILE.settings:get("document.language")
 
   local teitrans = SILE.scratch.teiabbr[lang]
@@ -67,7 +78,7 @@ function package.orthPrefix (_, prefix)
 end
 
 function package:writeAbbr ()
-  local textcase = self.class.packages.textcase or self.class.packages.tetxcase -- HACK FIXME 0.14.0 typo SILE #1568
+  local textcase = self.class.packages.textcase
   local function compare(a,b)
     return textcase:lowercase(a.translate) < textcase:lowercase(b.translate)
   end
@@ -129,7 +140,7 @@ function package:writeAbbr ()
   end)
 end
 
-function package.writeBibl (_, bibliography)
+function package:writeBibl (bibliography)
   local lang = SILE.settings:get("document.language")
 
   local teitrans = SILE.scratch.teiabbr[lang]
@@ -172,7 +183,7 @@ function package.writeBibl (_, bibliography)
   end)
 end
 
-function package.writeImpressum (_)
+function package:writeImpressum ()
   local lang = SILE.settings:get("document.language")
 
   local teitrans = SILE.scratch.teiabbr[lang]
