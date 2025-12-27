@@ -10,7 +10,7 @@
     </titleStmt>
 
     <editionStmt>
-      <edition n="1.0.3"/>
+      <edition n="1.0.4"/>
     </editionStmt>
 
     <publicationStmt>
@@ -20,7 +20,7 @@
            conditions énoncés dans la licence Creative Commons Attribution, Non-Commercial,
            Share-Alike, version 2.0 (<xref>http://creativecommons.org/licenses/by-nc-sa/2.0/</xref>).</p>
       </availability>
-      <date>2021</date>
+      <date>2025</date>
     </publicationStmt>
 
     <notesStmt>
@@ -526,6 +526,24 @@
   <sense>
     <trans lang="fr">
       <def>rouge (sang)</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="adarthrin">
+  <form>
+    <orth>adarthrin</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>adarthasrin</orth>
+  </form>
+  <gramGrp>
+    <pos>adj.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>apprivoisé, domestiqué</def>
     </trans>
   </sense>
 </entry>
@@ -1865,6 +1883,24 @@
   </note>
 </entry>
 
+<entry id="anicserin">
+  <form>
+    <orth>anicserin</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>anicsemrin</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>brumeux</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="anothrin">
   <form>
     <orth>anothrin</orth>
@@ -2331,6 +2367,24 @@
   </sense>
 </entry>
 
+<entry id="asaxterin">
+  <form>
+    <orth>asaxterin</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>asaxtasrin</orth>
+  </form>
+  <gramGrp>
+    <pos>adj.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>fort, robuste</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="asechedrin">
   <form>
     <orth>asechedrin</orth>
@@ -2558,6 +2612,24 @@
   </sense>
 </entry>
 
+<entry id="avalerin">
+  <form>
+    <orth>avalerin</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>avalemrin</orth>
+  </form>
+  <gramGrp>
+    <pos>adj.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>sauvage, inhabité, non cultivé</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="avedhrin">
   <form>
     <orth>avedhrin</orth>
@@ -2780,6 +2852,39 @@
 
 <milestone n="B" unit="part"/>
 
+<entry id="bad">
+  <form>
+    <orth>bad</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>notion de proximité</def>
+    </trans>
+  </sense>
+  <etym>BÁNET</etym>
+</entry>
+
+<entry id="badied">
+  <form>
+    <orth>badied</orth>
+  </form>
+  <gramGrp>
+    <pos>adv.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>proche</def> <usg type="hint">dans l’espace</usg>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="baldh">
   <form>
     <orth>baldh</orth>
@@ -2797,6 +2902,53 @@
     </trans>
   </sense>
   <etym>BÁLAD</etym>
+</entry>
+
+<entry id="bale">
+  <form>
+    <orth>bale</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>(faire) chuter, lâcher qqch., laisser choir</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="Baliad">
+  <form>
+    <orth>Baliad</orth>
+  </form>
+  <gramGrp>
+    <pos>n. pr.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>l’Au-Delà, l’Ailleurs</def> <usg type="hint">nom populaire du royaume des morts</usg>
+    </trans>
+  </sense>
+  <sense>
+    <trans lang="fr">
+      <def>l’Au-Fond</def> <usg type="hint">nom populaire des enfers</usg>
+    </trans>
+  </sense>
+  <eg>
+    <q>Eig Baliad eigin i·Sorn</q>
+    <trans lang="fr">
+      <tr>vers l’Au-Delà, à la Chimère (formule elliptique pour désigner des choses perdues pour toujours, etc.)</tr>
+    </trans>
+  </eg>
+  <note type="comment" lang="fr">
+    Dans l’ancien parler d’Almaq, ce terme semble avoir recouvert une notion vague de néant ou de vide,
+    que l’on retrouve peut-être dans l’expression proverbiale susmentionnée.
+    Pendant l’Empire, il en est venu à signifier « l’Au-Fond ».
+    Dans la langue de l’occupant siléen, <hi>Bāl</hi> se réfère à un enfer souterrain où vit l’Hydre de leurs mythes (rapprochée de la Chimère).
+    Cela aura induit un glissement sémantique progressif, renforcé par une collusion populaire avec le verbe <hi>bale</hi> 
+    (sans rapport étymologique certain à l’origine).
+  </note>
 </entry>
 
 <entry id="barn">
@@ -4482,6 +4634,20 @@
   </sense>
 </entry>
 
+<entry id="covme">
+  <form>
+    <orth>covme</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>considérer, estimer</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="coxt">
   <form>
     <orth>coxt</orth>
@@ -4730,6 +4896,29 @@
       <def>le parfait</def> <usg type="hint">au sens linguistique</usg>
     </trans>
   </sense>
+</entry>
+
+<entry id="darth">
+  <form>
+    <orth>darth</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>animal domestique</def>
+    </trans>
+  </sense>
+  <etym>DÁRAT</etym>
+  <note type="comment" lang="fr">
+    Le terme englobe aussi des animaux comme la souris des villes ou le rat.
+  </note>
+  <xr type="analogy"><ptr target="ravan"/></xr>
 </entry>
 
 <entry id="dathl">
@@ -6189,20 +6378,6 @@
   <etym><hi>*ed-dane</hi> « non-parfection »</etym>
 </entry>
 
-<entry id="ephied">
-  <form>
-    <orth>ephied</orth>
-  </form>
-  <gramGrp>
-    <pos>adv.</pos>
-  </gramGrp>
-  <sense>
-    <trans lang="fr">
-      <def>de quelque manière que ce soit</def>
-    </trans>
-  </sense>
-</entry>
-
 <entry id="eru">
   <form>
     <orth>eru·</orth>
@@ -6943,6 +7118,45 @@
     </trans>
   </sense>
   <etym>PERÉD</etym>
+</entry>
+
+<entry id="fumr">
+  <form>
+    <orth>fumr</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>louange</def>
+    </trans>
+  </sense>
+  <etym>PÚMUR</etym>
+</entry>
+
+<entry id="fumre">
+  <form>
+    <orth>fumre</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>louer</def>
+    </trans>
+  </sense>
+  <sense>
+    <usg type="ext">by ext.</usg>
+    <trans lang="fr">
+      <def>flatter</def>
+    </trans>
+  </sense>
 </entry>
 
 <entry id="fwethne">
@@ -9169,6 +9383,58 @@
   </sense>
 </entry>
 
+<entry id="laxn">
+  <form>
+    <orth>laxn</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>larme, pleur</def>
+    </trans>
+  </sense>
+    <etym>LÁKAN</etym>
+</entry>
+
+<entry id="laxne">
+  <form>
+    <orth>laxne</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>pleurer, verser des larmes</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="lecher">
+  <form>
+    <orth>lecher</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>île</def>
+    </trans>
+  </sense>
+  <etym>LEKER</etym>
+</entry>
+
 <entry id="led">
   <form>
     <orth>led</orth>
@@ -9783,6 +10049,39 @@
   </sense>
 </entry>
 
+<entry id="livin">
+  <form>
+    <orth>livin</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>accord, agrément</def>
+    </trans>
+  </sense>
+  <etym>LIBIN</etym>
+</entry>
+
+<entry id="livine">
+  <form>
+    <orth>livine</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>convenir, être d’accord</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="lixre">
   <form>
     <orth>lixre</orth>
@@ -10285,7 +10584,7 @@
   </gramGrp>
   <sense>
     <trans lang="fr">
-      <def>se sentier bien</def>
+      <def>se sentir bien</def>
     </trans>
   </sense>
   <etym>MER[IT]</etym>
@@ -11285,6 +11584,20 @@
   </sense>
 </entry>
 
+<entry id="nephied">
+  <form>
+    <orth>nephied</orth>
+  </form>
+  <gramGrp>
+    <pos>adv.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>de quelque manière que ce soit</def>
+    </trans>
+  </sense>
+</entry>
+
 <entry id="nephuin">
   <form>
     <orth>nephuin</orth>
@@ -11495,6 +11808,25 @@
   </sense>
 </entry>
 
+<entry id="niche">
+  <form>
+    <orth>niche</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~em</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>brume</def>
+    </trans>
+  </sense>
+  <etym>NÍKIS, G. *NICSA, A. arch. *nicse</etym>
+</entry>
+
 <entry id="nirsh">
   <form>
     <orth>nirsh</orth>
@@ -11590,6 +11922,23 @@
     </trans>
   </sense>
   <etym>NIBEL</etym>
+</entry>
+
+<entry id="nole">
+  <form>
+    <orth>nole</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>(se) poser, (s’)être perché</def>
+    </trans>
+  </sense>
+  <note type="comment" lang="fr">
+    S’emploie surtout de façon réflexive, <hi>se nole</hi>.
+  </note>
 </entry>
 
 <entry id="nolog">
@@ -12344,6 +12693,26 @@
   </note>
 </entry>
 
+<entry id="phore">
+  <form>
+    <orth>phore</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>montrer, indiquer</def>
+    </trans>
+  </sense>
+  <sense>
+    <trans lang="fr">
+      <def>prouver</def>
+    </trans>
+  </sense>
+  <etym>SOPÓR</etym>
+</entry>
+
 <entry id="pondh">
   <form>
     <orth>pondh</orth>
@@ -12916,6 +13285,56 @@
   <etym>RATAG</etym>
 </entry>
 
+<entry id="ravan">
+  <form>
+    <orth>ravan</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>animal</def>
+    </trans>
+  </sense>
+  <etym>RÁWAN</etym>
+  <xr type="analogy"><ptr target="darth"/></xr>
+</entry>
+
+<entry id="raxte">
+  <form>
+    <orth>raxte</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>essayer, tenter</def>
+    </trans>
+  </sense>
+  <etym>RÁKAT</etym>
+</entry>
+
+<entry id="releidhe">
+  <form>
+    <orth>releidhe</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>prêter attention à qqch.</def>
+    </trans>
+  </sense>
+  <etym>RÉLÉD</etym>
+</entry>
+
 <entry id="reig">
   <form>
     <orth>reig</orth>
@@ -13034,6 +13453,25 @@
     </trans>
   </sense>
   <etym>RÍNIS</etym>
+</entry>
+
+<entry id="rived">
+  <form>
+    <orth>rived</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>paix</def>
+    </trans>
+  </sense>
+  <etym>RIB[ET]</etym>
 </entry>
 
 <entry id="roched">
@@ -13158,6 +13596,39 @@
   <sense>
     <trans lang="fr">
       <def>particule hypocoristique</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="sachan">
+  <form>
+    <orth>sachan</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~is</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>chant</def>
+    </trans>
+  </sense>
+  <etym>SÁKAN</etym>
+</entry>
+
+<entry id="sachane">
+  <form>
+    <orth>sachane</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>chanter</def>
     </trans>
   </sense>
 </entry>
@@ -13419,6 +13890,80 @@
   <sense>
     <trans lang="fr">
       <def>nom d’adulte</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="savarn">
+  <form>
+    <orth>savarn</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>village, hameau</def>
+    </trans>
+  </sense>
+  <xr type="analogy"><ptr target="barn"/></xr>
+</entry>
+
+<entry id="savarnian">
+  <form>
+    <orth>savarnian</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~es</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>  
+    <trans lang="fr">
+      <def>villageois</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="saxt">
+  <form>
+    <orth>saxt</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>personne forte, athlète</def>
+    </trans>
+  </sense>
+  <etym>SÁKAT</etym>
+</entry>
+
+<entry id="saxtuid">
+  <form>
+    <orth>saxtuid</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~es</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>force, puissance</def> <usg type="hint">physique</usg>
     </trans>
   </sense>
 </entry>
@@ -14199,6 +14744,20 @@
   <xr type="analogy"><ptr target="seigian"/>, <ptr target="tevchian"/></xr>
 </entry>
 
+<entry id="suxtuid">
+  <form>
+    <orth>suxtuid</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>intelligence</def>
+    </trans>
+  </sense>
+</entry>
+
 <milestone n="T" unit="part"/>
 
 <entry id="taig">
@@ -14289,6 +14848,39 @@
   <sense>
     <trans lang="fr">
       <def>bâtir, construire</def>
+    </trans>
+  </sense>
+</entry>
+
+<entry id="tanf">
+  <form>
+    <orth>tanf</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~as</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>possession</def>
+    </trans>
+  </sense>
+  <etym>TÁNAP</etym>
+</entry>
+
+<entry id="tanfe">
+  <form>
+    <orth>tanfe</orth>
+  </form>
+  <gramGrp>
+    <pos>v.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>s’approprier, posséder, prendre possession de qqch.</def>
     </trans>
   </sense>
 </entry>
@@ -15517,6 +16109,31 @@
 
 <milestone n="V" unit="part"/>
 
+<entry id="vale">
+  <form>
+    <orth>vale</orth>
+  </form>
+  <form type="inflected">
+    <number>pl.</number>
+    <orth>~m</orth>
+  </form>
+  <gramGrp>
+    <pos>n.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>contrée sauvage, terre non cultivée, inhabitée</def>
+    </trans>
+  </sense>
+  <sense>
+    <usg type="ext">by ext.</usg>
+    <trans lang="fr">
+      <def>désert, région désolée</def>
+    </trans>
+  </sense>
+  <etym>WALE</etym>
+</entry>
+
 <entry id="valf">
   <form>
     <orth>valf</orth>
@@ -16141,6 +16758,20 @@
 </entry>
 
 <milestone n="Y" unit="part"/>
+
+<entry id="yeldo">
+  <form>
+    <orth>yeldo</orth>
+  </form>
+  <gramGrp>
+    <pos>interj.</pos>
+  </gramGrp>
+  <sense>
+    <trans lang="fr">
+      <def>Oh !</def> <usg type="hint">exclamation pour attirer l’attention</usg>
+    </trans>
+  </sense>
+</entry>
 
 <entry id="yudseil">
   <form>
